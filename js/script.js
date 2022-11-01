@@ -28,9 +28,11 @@ const mainElement = document.querySelector(".promo"),
     promoMenu = mainElement.querySelector(".promo__menu"),
     promoContent = mainElement.querySelector(".promo__content"),
     promoInteractive = mainElement.querySelector(".promo__interactive"),
-    promoAdv = mainElement.querySelector(".promo__adv");
+    promoAdv = mainElement.querySelectorAll(".promo__adv img");
 
-promoAdv.remove();
+promoAdv.forEach(value => {
+    value.remove();
+});
 
 const promoBg = promoContent.querySelector(".promo__bg"),
     promoGenre = promoBg.querySelector(".promo__genre"),
@@ -40,7 +42,7 @@ const promoBg = promoContent.querySelector(".promo__bg"),
 
 promoGenre.textContent = "Драма".toUpperCase();
 
-promoBg.style.background = "url(../img/bg.jpg) center center/cover no-repeat";
+promoBg.style.background = "url(../img/bg.jpg)";
 
 const buffer = [];
 const promoInteractiveTitleContainer = promoInteractive.querySelector("div"),
