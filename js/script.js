@@ -49,24 +49,36 @@ const promoInteractiveTitleContainer = promoInteractive.querySelector("div"),
     promoInteractiveList = promoInteractiveTitleContainer.querySelector(".promo__interactive-list"),
     promoInteractiveTitle = promoInteractiveTitleContainer.querySelector(".promo__interactive-title");
 
-const promoInteractiveItem = promoInteractiveList.querySelectorAll(".promo__interactive-item");
+// const promoInteractiveItem = promoInteractiveList.querySelectorAll(".promo__interactive-item");
 
-promoInteractiveItem.forEach(value => {
-    buffer.push(value.innerText);
+// promoInteractiveItem.forEach(value => {
+//     buffer.push(value.innerText);
+// });
+// buffer.sort();
+
+// for (let i = 0; i < buffer.length; i++) {
+//     promoInteractiveItem[i].innerText = i + 1 + ". " + buffer[i];
+// }
+// console.dir(promoInteractiveList);
+// promoInteractiveList.remove();
+// promoInteractiveTitle.remove();
+
+// const newPromoInteractiveList = document.createElement("ol");
+// promoInteractiveTitleContainer.prepend(newPromoInteractiveList);
+// newPromoInteractiveList.className = "promo__interactive-list";
+// promoInteractiveItem.forEach(value => {
+//     newPromoInteractiveList.append(value);
+// });
+// promoInteractiveTitleContainer.prepend(promoInteractiveTitle);
+
+promoInteractiveList.innerHTML = "";
+
+movieDB.movies.sort();
+
+movieDB.movies.forEach((film, i) => {
+    promoInteractiveList.innerHTML += `
+        <li class="promo__interactive-item">${i + 1}. ${film}
+            <div class="delete"></div>
+        </li>
+    `;
 });
-buffer.sort();
-
-for (let i = 0; i < buffer.length; i++) {
-    promoInteractiveItem[i].innerText = i + 1 + ". " + buffer[i];
-}
-console.dir(promoInteractiveList);
-promoInteractiveList.remove();
-promoInteractiveTitle.remove();
-
-const newPromoInteractiveList = document.createElement("ol");
-promoInteractiveTitleContainer.prepend(newPromoInteractiveList);
-newPromoInteractiveList.className = "promo__interactive-list";
-promoInteractiveItem.forEach(value => {
-    newPromoInteractiveList.append(value);
-});
-promoInteractiveTitleContainer.prepend(promoInteractiveTitle);
