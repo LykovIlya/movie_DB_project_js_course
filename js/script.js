@@ -76,22 +76,61 @@ window.addEventListener("DOMContentLoaded", () => {
     
     5) Фильмы должны быть отсортированы по алфавиту */
 
-    eventStarter(document.querySelector(".add"), null, [
-        document.querySelector(".adding__input"),
-        document.querySelector('[type = "checkbox"]'),
-        document.querySelector("button")
-    ]);
+    const form = document.querySelector("form.add");
 
-    function eventStarter(element, func, arrElements) {
-        element.addEventListener("submit", (event) => {
-            event.preventDefault();
-            for (let element in arrElements) {
-                console.log(element);
-            }
-            console.log("click");
-        });
+    const movieList = document.querySelector(".promo__interactive-list");
 
+    const submitFormButton = form.querySelector("button"),
+        movieFormInput = form.querySelector(".adding__input"),
+        checkBoxFormInput = form.querySelector("[type='checkbox']");
+
+    form.addEventListener("submit", (event) => {
+        eventStarter(event);
+    });
+    submitFormButton.removeEventListener("click", submitFormButton);
+
+    movieList.addEventListener("click", (event) => {
+        deleteMovieFromList(event);
+    });
+    movieList.removeEventListener("click", movieList);
+
+    function eventStarter(event) {
+        event.preventDefault();
+        addMovieInDB(movieFormInput.value, checkBoxFormInput.checked);
+        showSortedList(document.querySelector(".promo__interactive-list"), movieDB.movies, returnMovieItem);
+        event.target.reset();
     }
 
+    function checkStringValidation(string) {
+        if (string == null || string == "" || string == undefined) {
+            alert("Некоректное значение");
+            return true;
+        }
+        return false;
+    }
+    function addMovieInDB(movie, favorite) {
+        if (checkStringValidation(movieFormInput.value)) {
+            movieFormInput.value = "";
+            return;
+        }
+        if (favorite) {
+            console.log("Добавляем любимый фильм");
+        }
+        if (movie.length <= 20) {
+            movieDB.movies.push(movie);
+        } else {
+            console.log(movie.length);
+            movieDB.movies.push(movie.slice(0, 20).concat("...").trim());
+        }
+    }
+
+    function deleteMovieFromList(event) {
+        event.preventDefault();
+        if (event.target.className === "delete") {
+            movieDB.movies.splice((event.target.offsetParent.innerText.slice(0, 1) - 1), 1);
+            console.log(movieDB.movies);
+            showSortedList(document.querySelector(".promo__interactive-list"), movieDB.movies, returnMovieItem);
+        }
+    }
 });
 
