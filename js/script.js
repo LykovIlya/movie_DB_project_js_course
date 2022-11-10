@@ -17,18 +17,20 @@
 window.addEventListener("DOMContentLoaded", () => {
     const movieDB = {
         movies: [
-            "Логан",
-            "Лига справедливости",
-            "Ла-ла лэнд",
-            "Одержимость",
-            "Скотт Пилигрим против..."
+            "логан",
+            "лига справедливости",
+            "ла-ла лэнд",
+            "одержимость",
+            "скотт Пилигрим против..."
         ]
     };
+
+    const movieDataBase = movieDB.movies;
 
     removeItems(document.querySelectorAll(".promo__adv"));
     changeInnerText(document.querySelector(".promo__genre"), "Драма".toUpperCase());
     changeBg(document.querySelector(".promo__bg"), "/img/bg.jpg");
-    showSortedList(document.querySelector(".promo__interactive-list"), movieDB.movies, returnMovieItem);
+    showSortedList(document.querySelector(".promo__interactive-list"), movieDataBase, returnMovieItem);
 
 
     function returnMovieItem(movie, index) {
@@ -97,7 +99,7 @@ window.addEventListener("DOMContentLoaded", () => {
     function eventStarter(event) {
         event.preventDefault();
         addMovieInDB(movieFormInput.value, checkBoxFormInput.checked);
-        showSortedList(document.querySelector(".promo__interactive-list"), movieDB.movies, returnMovieItem);
+        showSortedList(document.querySelector(".promo__interactive-list"), movieDataBase, returnMovieItem);
         event.target.reset();
     }
 
@@ -117,19 +119,20 @@ window.addEventListener("DOMContentLoaded", () => {
             console.log("Добавляем любимый фильм");
         }
         if (movie.length <= 20) {
-            movieDB.movies.push(movie);
+            movieDataBase.push(movie.toUpperCase());
         } else {
             console.log(movie.length);
-            movieDB.movies.push(movie.slice(0, 20).concat("...").trim());
+            movieDataBase.push(movie.slice(0, 20).concat("...").trim());
         }
     }
 
     function deleteMovieFromList(event) {
         event.preventDefault();
         if (event.target.className === "delete") {
-            movieDB.movies.splice((event.target.offsetParent.innerText.slice(0, 1) - 1), 1);
+            movieDataBase.splice((event.target.offsetParent.innerText.slice(0, 1) - 1), 1);
+            console.log(movieDataBase);
             console.log(movieDB.movies);
-            showSortedList(document.querySelector(".promo__interactive-list"), movieDB.movies, returnMovieItem);
+            showSortedList(document.querySelector(".promo__interactive-list"), movieDataBase, returnMovieItem);
         }
     }
 });
